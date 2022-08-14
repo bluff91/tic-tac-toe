@@ -1,0 +1,144 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+:root {
+    --cel-size:100px;
+    --mark-size:calc(var(--cel-size) * 0.9);
+}
+
+body {
+    margin: 0;
+}
+
+.board {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto);
+}
+
+.box {
+    position: relative;
+    width: var(--cel-size);
+    height: var(--cel-size);
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.box:first-child,
+.box:nth-child(2),
+.box:nth-child(3) {
+    border-top: none;
+}
+
+.box:nth-child(3n+1) {
+    border-left: none;
+}
+
+.box:nth-child(3n+3) {
+    border-right: none;
+}
+
+.box:last-child,
+.box:nth-child(8),
+.box:nth-child(7) {
+    border-bottom: none; 
+}
+
+.box.x::before,
+.box.x::after,
+.board.x .box:not(.x):not(.o):hover::before,
+.board.x .box:not(.x):not(.o):hover::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size)* .15);
+    height: var(--mark-size);
+    background-color: black;
+}
+
+.box.x::before,
+.board.x .box:not(.x):not(.o):hover::before {
+    transform: rotate(45deg);
+}
+
+.box.x::after,
+.board.x .box:not(.x):not(.o):hover::after {
+    transform: rotate(-45deg);
+}
+
+
+.box.o::before,
+.box.o::after,
+.board.o .box:not(.x):not(.o):hover::before,
+.board.o .box:not(.x):not(.o):hover::after {
+    position: absolute;
+    content: '';
+    width: var(--mark-size);
+    height: var(--mark-size);
+    background-color: black;
+    border-radius: 50%;
+}
+
+.box.o::after,
+.board.o .box:not(.x):not(.o):hover::after {
+    width: calc(var(--mark-size) * 0.7);
+    height: calc(var(--mark-size) * 0.7);
+    background-color: white;
+}
+
+.box.o,
+.box.x {
+    cursor:not-allowed;
+}
+
+.board.x .box:not(.x):not(.o):hover::before,
+.board.x .box:not(.x):not(.o):hover::after {
+    background-color: lightgrey;
+}
+
+.board.o .box:not(.x):not(.o):hover::before {
+    background-color: lightgrey;
+}
+
+.winning-messesage {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 4rem;
+    flex-direction: column;
+}
+
+.winning-messesage button {
+    font-size: 3rem;
+    background-color: #fff;
+    border: 1px solid black;
+    padding: 0.25rem 0.5em;
+    cursor: pointer;
+    border-radius: 8px;
+    font-family: monospace;
+}
+
+.winning-messesage button:hover {
+    background-color: black;
+    border-color: #fff;
+    color: #fff;
+}
+
+.winning-messesage.show {
+    display: flex;
+}
